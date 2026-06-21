@@ -1,6 +1,6 @@
-use crate::{app::App, commands};
+use crate::{app::{App, Focus}, commands};
 use anyhow::Result;
-use crossterm::event::{self, Event, KeyCode, KeyEventKind};
+use crossterm::event::{self, Event, KeyCode, KeyEventKind, KeyModifiers};
 use notify::{Config, RecommendedWatcher, RecursiveMode, Watcher};
 use std::{path::PathBuf, sync::mpsc, time::Duration};
 
@@ -64,7 +64,15 @@ pub fn handle_events(app: &mut App, watcher: &mut ReloadWatcher) -> Result<()> {
         KeyCode::Char('q') | KeyCode::Esc => app.should_quit = true,
         KeyCode::Down | KeyCode::Char('j') => app.next(),
         KeyCode::Up | KeyCode::Char('k') => app.previous(),
-        KeyCode::Enter => app.open_related(),
+        KeyCode::Tab if key.modifiers.contains(KeyModifiers::SHIFT) => app.focus_previous(),
+        KeyCode::Tab => app.focus_next(),
+        KeyCode::Enter => {
+            if matches!(app.focus, Focus::Related) {
+                app.open_selected_related();
+            } else {
+                app.open_related();
+            }
+        }
         KeyCode::Char('b') => app.back(),
         KeyCode::Char('v') => app.message = commands::lore_validate(),
         _ => {}

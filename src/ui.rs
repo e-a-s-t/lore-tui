@@ -1,4 +1,4 @@
-use crate::app::App;
+use crate::app::{App, Focus};
 use ratatui::{
     layout::{Constraint, Direction, Layout, Rect},
     style::{Modifier, Style},
@@ -36,32 +36,42 @@ fn draw_artifacts(frame: &mut Frame, app: &App, area: Rect) {
         .filter(|(_, artifact)| artifact.is_feature());
     let items: Vec<ListItem> = features
         .map(|(index, artifact)| {
-            let line = if index == app.selected {
-                Line::from(vec![Span::styled(
-                    artifact.label(),
-                    Style::default().add_modifier(Modifier::BOLD),
-                )])
+            let label = format!("{} [{}]  {}", artifact.meta.id, artifact.meta.status, artifact.meta.title);
+            let line = if index == app.feature_selected {
+                Line::from(vec![Span::styled(label, Style::default().add_modifier(Modifier::BOLD))])
             } else {
-                Line::from(artifact.label())
+                Line::from(label)
             };
             ListItem::new(line)
         })
         .collect();
 
-    let list = List::new(items).block(Block::default().title("Features").borders(Borders::ALL));
+    let title = if matches!(app.focus, Focus::Features) { "Features*" } else { "Features" };
+    let list = List::new(items).block(Block::default().title(title).borders(Borders::ALL));
     frame.render_widget(list, area);
 }
 
 fn draw_relations(frame: &mut Frame, app: &App, area: Rect) {
     let mut items = Vec::new();
+    let mut related_index = 0;
     if let Some(artifact) = app.selected_artifact() {
         for (group, ids) in artifact.relation_groups() {
+            if group == "Features" {
+                continue;
+            }
             items.push(ListItem::new(Line::from(Span::styled(
                 group,
                 Style::default().add_modifier(Modifier::BOLD),
             ))));
-            for id in ids {
-                items.push(ListItem::new(format!("  {id}")));
+            for id in ids.iter() {
+                let label = format!("  {id}");
+                let line = if matches!(app.focus, Focus::Related) && related_index == app.related_selected {
+                    Line::from(vec![Span::styled(label, Style::default().add_modifier(Modifier::BOLD))])
+                } else {
+                    Line::from(label)
+                };
+                items.push(ListItem::new(line));
+                related_index += 1;
             }
         }
     }
@@ -70,20 +80,13 @@ fn draw_relations(frame: &mut Frame, app: &App, area: Rect) {
         items.push(ListItem::new("No relations"));
     }
 
-    let list = List::new(items).block(Block::default().title("Related").borders(Borders::ALL));
+    let title = if matches!(app.focus, Focus::Related) { "Related*" } else { "Related" };
+    let list = List::new(items).block(Block::default().title(title).borders(Borders::ALL));
     frame.render_widget(list, area);
 }
 
 fn draw_preview(frame: &mut Frame, app: &App, area: Rect) {
-    let text = match app.selected_artifact() {
-        Some(artifact) => format!(
-            "{}\n{}\nStatus: {}\n\n{}",
-            artifact.meta.id, artifact.meta.title, artifact.meta.status, artifact.body
-        ),
-        None => "No artifact selected".to_string(),
-    };
-
-    let paragraph = Paragraph::new(text)
+    let paragraph = Paragraph::new(app.preview.as_str())
         .block(Block::default().title("Preview").borders(Borders::ALL))
         .wrap(Wrap { trim: false });
 
@@ -92,7 +95,7 @@ fn draw_preview(frame: &mut Frame, app: &App, area: Rect) {
 
 fn draw_status(frame: &mut Frame, app: &App, area: Rect) {
     let status = format!(
-        " q/Esc quit | ↑/↓ or j/k navigate | Enter open | b back | v validate | cwd: {} | {} ",
+        " Tab switch pane | ↑/↓ navigate | Enter open | b back | v validate | cwd: {} | {} ",
         app.root.display(),
         app.message
     );

@@ -24,14 +24,9 @@ pub struct Frontmatter {
 #[derive(Debug, Clone)]
 pub struct Artifact {
     pub meta: Frontmatter,
-    pub body: String,
 }
 
 impl Artifact {
-    pub fn label(&self) -> String {
-        format!("{}  {}", self.meta.id, self.meta.title)
-    }
-
     pub fn is_feature(&self) -> bool {
         self.meta.id.starts_with("FEATURE")
     }
@@ -75,15 +70,12 @@ pub fn load_lore(root: &Path) -> Result<Vec<Artifact>> {
         let Some(rest) = text.strip_prefix("---\n") else {
             continue;
         };
-        let Some((yaml, body)) = rest.split_once("\n---\n") else {
+        let Some((yaml, _body)) = rest.split_once("\n---\n") else {
             continue;
         };
 
         let meta: Frontmatter = serde_yaml::from_str(yaml)?;
-        artifacts.push(Artifact {
-            meta,
-            body: body.trim().to_string(),
-        });
+        artifacts.push(Artifact { meta });
     }
 
     artifacts.sort_by(|a, b| a.meta.id.cmp(&b.meta.id));
@@ -148,7 +140,6 @@ mod tests {
                 related_features: vec!["FEATURE-002".into()],
                 ..Default::default()
             },
-            body: String::new(),
         };
 
         assert_eq!(
