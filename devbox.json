@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.2/.schema/devbox.schema.json",
+  "packages": [
+    "rustup@latest",
+    "gcc@latest",
+    "pkg-config@latest",
+    "openssl@latest",
+    "git@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      "rustup default stable >/dev/null 2>&1 || true",
+      "rustup component add rustfmt clippy >/dev/null 2>&1 || true"
+    ],
+    "scripts": {
+      "run": "cargo run",
+      "build": "cargo build",
+      "test": "cargo test",
+      "fmt": "cargo fmt --all",
+      "lint": "cargo clippy --all-targets -- -D warnings",
+      "check": "cargo check"
+    }
+  }
+}
