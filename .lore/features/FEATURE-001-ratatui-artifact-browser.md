@@ -1,32 +1,30 @@
 ---
 id: FEATURE-001
-title: Ratatui artifact browser
+title: Rust Workspace Structure
 status: Accepted
-related_requirements: [REQ-001, REQ-002, REQ-003, REQ-004, REQ-005]
-related_adrs: [ADR-002]
-related_stories: [STORY-001]
-related_tests: [TEST-004]
+related_requirements: [REQ-010]
+related_adrs: [ADR-001]
+related_stories: [STORY-004]
+related_tests: [TEST-009]
 ---
 
-# FEATURE-001: Ratatui artifact browser
+# FEATURE-001: Rust Workspace Structure
 
 ## Summary
 
-Provide a terminal user interface for browsing Lore artifacts.
-
-The application shall:
-
-- Load artifacts from .lore/
-- Present Features as the primary entry point
-- Display related Requirements, Stories, Tests and ADRs
-- Remain read-only initially
-- Automatically reflect changes made to `.lore/`
+Create a Rust workspace and split the repository into `lore-tui`, `lore-core`, and `lore-cli` crates without changing behavior.
 
 ## Scope
 
 Initial version includes:
 
-- Feature list
-- Relation list
-- Artifact preview
-- Keyboard navigation
+- Workspace root Cargo manifest
+- Existing TUI crate under `crates/lore-tui`
+- Empty `lore-core` crate
+- Empty `lore-cli` crate
+
+## Non-goals
+
+- Repository discovery
+- Validation logic
+- TUI behavior changes

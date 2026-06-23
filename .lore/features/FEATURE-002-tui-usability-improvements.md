@@ -1,43 +1,32 @@
 ---
 id: FEATURE-002
-title: TUI usability improvements
+title: Repository Discovery in lore-core
 status: Accepted
-related_requirements: [REQ-006, REQ-007, REQ-008]
-related_adrs: [ADR-003]
-related_stories: [STORY-002]
-related_tests: [TEST-005, TEST-006, TEST-007]
+related_requirements: [REQ-011]
+related_adrs: []
+related_stories: [STORY-005]
+related_tests: [TEST-010]
+related_features: []
 ---
 
-# FEATURE-002: TUI usability improvements
+# FEATURE-002: Repository Discovery in lore-core
 
 ## Summary
 
-Improve the usability and readability of the Ratatui artifact browser.
-
-The application shall:
-
-* Show artifact status in the Features pane.
-* Allow navigation within the Related pane.
-* Allow opening Requirements, Stories, ADRs and Tests from the Related pane.
-* Display artifact previews using the output from `lore show <id>`.
-* Remain read-only.
+Add repository discovery to `lore-core` so callers can locate the repository root and `.lore` directory from any nested working directory.
 
 ## Scope
 
 Initial version includes:
 
-* Feature status indicators.
-* Focus switching between panes.
-* Navigation inside the Related pane.
-* Open selected related artifacts.
-* Back navigation.
-* Preview pane driven by `lore show <id>`.
+- `Repository { root, lore_dir }`
+- `discover_repository()`
+- Upward search from the current working directory
+- Structured error when `.lore/` is not found
+- `lore-core` unit tests only
 
 ## Non-goals
 
-* Editing artifacts.
-* Search.
-* Validation view.
-* Trace view.
-* Agent launcher.
-* Markdown rendering inside lore-tui.
+- Validation logic
+- TUI behavior changes
+- Environment variables or config files

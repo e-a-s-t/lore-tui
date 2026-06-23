@@ -1,0 +1,9 @@
+[package]
+name = "lore-cli"
+version = "0.1.0"
+edition = "2021"
+description = "CLI for Lore"
+license = "MIT"
+
+[dependencies]
+lore-core = { path = "../lore-core" }

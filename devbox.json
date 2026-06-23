@@ -13,12 +13,18 @@
       "rustup component add rustfmt clippy >/dev/null 2>&1 || true"
     ],
     "scripts": {
-      "run": "cargo run",
-      "build": "cargo build",
-      "test": "cargo test",
-      "fmt": "cargo fmt --all",
-      "lint": "cargo clippy --all-targets -- -D warnings",
-      "check": "cargo check"
+      "run-tui": "cargo run --manifest-path crates/lore-tui/Cargo.toml",
+      "build-tui": "cargo build --manifest-path crates/lore-tui/Cargo.toml",
+      "test-tui": "cargo test --manifest-path crates/lore-tui/Cargo.toml",
+      "fmt-tui": "cargo fmt --all --manifest-path crates/lore-tui/Cargo.toml",
+      "lint-tui": "cargo clippy --all-targets -- -D warnings --manifest-path crates/lore-tui/Cargo.toml",
+      "check-tui": "cargo check --manifest-path crates/lore-tui/Cargo.toml",
+      "run-cli": "cargo run --manifest-path crates/lore-cli/Cargo.toml",
+      "build-cli": "cargo build --manifest-path crates/lore-cli/Cargo.toml",
+      "test-cli": "cargo test --manifest-path crates/lore-cli/Cargo.toml",
+      "fmt-cli": "cargo fmt --all --manifest-path crates/lore-cli/Cargo.toml",
+      "lint-cli": "cargo clippy --all-targets -- -D warnings --manifest-path crates/lore-cli/Cargo.toml",
+      "check-cli": "cargo check --manifest-path crates/lore-cli/Cargo.toml"
     }
   }
 }

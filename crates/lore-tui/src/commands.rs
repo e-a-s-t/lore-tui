@@ -1,5 +1,7 @@
 use std::process::Command;
 
+use lore_core::{discover_repository, validate_repository};
+
 pub fn lore_show(root: &std::path::Path, id: &str) -> String {
     match Command::new("lore")
         .current_dir(root)
@@ -22,21 +24,19 @@ pub fn lore_show(root: &std::path::Path, id: &str) -> String {
 }
 
 pub fn lore_validate() -> String {
-    match Command::new("lore").arg("validate").output() {
-        Ok(output) => {
-            let stdout = String::from_utf8_lossy(&output.stdout);
-            let stderr = String::from_utf8_lossy(&output.stderr);
-            let combined = format!("{}{}", stdout, stderr).trim().to_string();
-            if combined.is_empty() {
-                "lore validate finished with no output".to_string()
-            } else {
-                combined
-            }
+    match discover_repository().and_then(|repository| validate_repository(&repository)) {
+        Ok(errors) if errors.is_empty() => "Repository is valid".to_string(),
+        Ok(errors) => {
+            let mut lines = errors
+                .into_iter()
+                .map(|error| format!("error: {error}"))
+                .collect::<Vec<_>>();
+            lines.push(format!("Found {} validation error(s)", lines.len()));
+            lines.join("\n")
         }
-        Err(error) => format!("Failed to run `lore validate`: {error}"),
+        Err(error) => format!("Validation failed: {error}"),
     }
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -57,6 +57,15 @@ mod tests {
         ));
         fs::create_dir_all(&root).unwrap();
         root
+    }
+
+    fn with_cwd<T>(dir: &std::path::Path, f: impl FnOnce() -> T) -> T {
+        let _guard = PATH_LOCK.get_or_init(|| Mutex::new(())).lock().unwrap();
+        let old = std::env::current_dir().unwrap();
+        std::env::set_current_dir(dir).unwrap();
+        let result = f();
+        std::env::set_current_dir(old).unwrap();
+        result
     }
 
     #[test]
@@ -101,5 +110,25 @@ echo "args=$*"
         std::env::set_var("PATH", old_path);
 
         assert!(output.starts_with("Failed to run `lore show REQ-001`"));
+    }
+
+    #[test]
+    fn lore_validate_uses_shared_repository_discovery_and_validation() {
+        let root = temp_dir();
+        fs::create_dir_all(root.join(".lore")).unwrap();
+        fs::write(
+            root.join(".lore").join("req.md"),
+            "---\nid: REQ-001\ntitle: Load\n---\nbody\n",
+        )
+        .unwrap();
+        fs::write(
+            root.join(".lore").join("feature.md"),
+            "---\nid: FEATURE-001\ntitle: Browser\nrelated_requirements: [REQ-001]\n---\nbody\n",
+        )
+        .unwrap();
+
+        let output = with_cwd(&root, lore_validate);
+
+        assert_eq!(output, "Repository is valid");
     }
 }
