@@ -684,14 +684,14 @@ checksum = "0ceec5bc11778974d1bcb055b18002eba7f4b3518b6a0081b3af5f21666da9ad"
 
 [[package]]
 name = "lore-cli"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "lore-core",
 ]
 
 [[package]]
 name = "lore-core"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "serde",
  "serde_yaml",
@@ -701,7 +701,7 @@ dependencies = [
 
 [[package]]
 name = "lore-tui"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "crossterm",
