@@ -1,4 +1,7 @@
-use crate::{artifacts::{load_lore, Artifact}, commands};
+use crate::{
+    artifacts::{load_lore, Artifact},
+    commands,
+};
 use anyhow::Result;
 use std::path::PathBuf;
 
@@ -47,20 +50,35 @@ impl App {
     }
 
     pub fn reload(&mut self) -> Result<()> {
-        let previous_feature_id = self.selected_feature().map(|artifact| artifact.meta.id.clone());
-        let previous_current_id = self.selected_artifact().map(|artifact| artifact.meta.id.clone());
+        let previous_feature_id = self
+            .selected_feature()
+            .map(|artifact| artifact.meta.id.clone());
+        let previous_current_id = self
+            .selected_artifact()
+            .map(|artifact| artifact.meta.id.clone());
         self.artifacts = load_lore(&self.root)?;
 
         let feature_indexes = self.feature_indexes();
         self.feature_selected = previous_feature_id
             .as_deref()
-            .and_then(|id| self.artifacts.iter().position(|artifact| artifact.meta.id == id))
+            .and_then(|id| {
+                self.artifacts
+                    .iter()
+                    .position(|artifact| artifact.meta.id == id)
+            })
             .or_else(|| feature_indexes.first().copied())
             .unwrap_or(0);
         self.current_selected = previous_current_id
             .as_deref()
-            .and_then(|id| self.artifacts.iter().position(|artifact| artifact.meta.id == id))
-            .unwrap_or(self.feature_selected.min(self.artifacts.len().saturating_sub(1)));
+            .and_then(|id| {
+                self.artifacts
+                    .iter()
+                    .position(|artifact| artifact.meta.id == id)
+            })
+            .unwrap_or(
+                self.feature_selected
+                    .min(self.artifacts.len().saturating_sub(1)),
+            );
         self.related_selected = 0;
         self.history.retain(|index| *index < self.artifacts.len());
         self.message = if self.artifacts.is_empty() {
@@ -122,7 +140,11 @@ impl App {
         let Some(current) = self.selected_artifact() else {
             return;
         };
-        let Some(target) = self.related_indexes_for(current).get(self.related_selected).copied() else {
+        let Some(target) = self
+            .related_indexes_for(current)
+            .get(self.related_selected)
+            .copied()
+        else {
             return;
         };
 
@@ -166,7 +188,8 @@ impl App {
             return;
         }
 
-        let next = (self.related_selected as isize + delta).clamp(0, related.len() as isize - 1) as usize;
+        let next =
+            (self.related_selected as isize + delta).clamp(0, related.len() as isize - 1) as usize;
         self.related_selected = next;
     }
 
@@ -186,7 +209,11 @@ impl App {
                 "Requirements" | "ADRs" | "Stories" | "Tests" => ids,
                 _ => Vec::new(),
             })
-            .filter_map(|id| self.artifacts.iter().position(|artifact| artifact.meta.id == id))
+            .filter_map(|id| {
+                self.artifacts
+                    .iter()
+                    .position(|artifact| artifact.meta.id == id)
+            })
             .collect()
     }
 

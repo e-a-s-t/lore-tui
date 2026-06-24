@@ -36,9 +36,15 @@ fn draw_artifacts(frame: &mut Frame, app: &App, area: Rect) {
         .filter(|(_, artifact)| artifact.is_feature());
     let items: Vec<ListItem> = features
         .map(|(index, artifact)| {
-            let label = format!("{} [{}]  {}", artifact.meta.id, artifact.meta.status, artifact.meta.title);
+            let label = format!(
+                "{} [{}]  {}",
+                artifact.meta.id, artifact.meta.status, artifact.meta.title
+            );
             let line = if index == app.feature_selected {
-                Line::from(vec![Span::styled(label, Style::default().add_modifier(Modifier::BOLD))])
+                Line::from(vec![Span::styled(
+                    label,
+                    Style::default().add_modifier(Modifier::BOLD),
+                )])
             } else {
                 Line::from(label)
             };
@@ -46,7 +52,11 @@ fn draw_artifacts(frame: &mut Frame, app: &App, area: Rect) {
         })
         .collect();
 
-    let title = if matches!(app.focus, Focus::Features) { "Features*" } else { "Features" };
+    let title = if matches!(app.focus, Focus::Features) {
+        "Features*"
+    } else {
+        "Features"
+    };
     let list = List::new(items).block(Block::default().title(title).borders(Borders::ALL));
     frame.render_widget(list, area);
 }
@@ -65,8 +75,13 @@ fn draw_relations(frame: &mut Frame, app: &App, area: Rect) {
             ))));
             for id in ids.iter() {
                 let label = format!("  {id}");
-                let line = if matches!(app.focus, Focus::Related) && related_index == app.related_selected {
-                    Line::from(vec![Span::styled(label, Style::default().add_modifier(Modifier::BOLD))])
+                let line = if matches!(app.focus, Focus::Related)
+                    && related_index == app.related_selected
+                {
+                    Line::from(vec![Span::styled(
+                        label,
+                        Style::default().add_modifier(Modifier::BOLD),
+                    )])
                 } else {
                     Line::from(label)
                 };
@@ -80,7 +95,11 @@ fn draw_relations(frame: &mut Frame, app: &App, area: Rect) {
         items.push(ListItem::new("No relations"));
     }
 
-    let title = if matches!(app.focus, Focus::Related) { "Related*" } else { "Related" };
+    let title = if matches!(app.focus, Focus::Related) {
+        "Related*"
+    } else {
+        "Related"
+    };
     let list = List::new(items).block(Block::default().title(title).borders(Borders::ALL));
     frame.render_widget(list, area);
 }

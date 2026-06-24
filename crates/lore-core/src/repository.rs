@@ -15,6 +15,10 @@ pub struct Repository {
 pub enum LoreError {
     #[error("no .lore directory found starting from {start}")]
     RepositoryNotFound { start: PathBuf },
+    #[error("lore: Unknown artifact: {id}")]
+    UnknownArtifact { id: String },
+    #[error("lore: Unsupported relationship: {left} <-> {right}")]
+    UnsupportedRelationship { left: String, right: String },
     #[error("failed to inspect {path}: {source}")]
     Io {
         path: PathBuf,
@@ -70,10 +74,13 @@ mod tests {
     fn temp_dir() -> PathBuf {
         let root = env::temp_dir().join(format!(
             "lore-core-repo-{}",
-            SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos()
+            SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
         ));
         fs::create_dir_all(&root).unwrap();
-        root
+        fs::canonicalize(&root).unwrap()
     }
 
     fn with_cwd<T>(dir: &Path, f: impl FnOnce() -> T) -> T {
@@ -113,7 +120,10 @@ mod tests {
     fn returns_error_when_lore_is_missing() {
         let start = PathBuf::from(format!(
             "/lore-missing-{}",
-            SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos()
+            SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
         ));
 
         let error = discover_repository_from(&start).unwrap_err();

@@ -12,9 +12,17 @@ pub enum ValidationError {
     #[error("missing required field `{field}` in {path}")]
     MissingField { path: PathBuf, field: &'static str },
     #[error("duplicate artifact id `{id}` in {first} and {second}")]
-    DuplicateId { id: String, first: PathBuf, second: PathBuf },
+    DuplicateId {
+        id: String,
+        first: PathBuf,
+        second: PathBuf,
+    },
     #[error("unknown reference `{id}` in {path} ({field})")]
-    UnknownReference { path: PathBuf, field: &'static str, id: String },
+    UnknownReference {
+        path: PathBuf,
+        field: &'static str,
+        id: String,
+    },
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -104,12 +112,18 @@ fn validate_artifacts(artifacts: &[Artifact]) -> Vec<ValidationError> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::{fs, time::{SystemTime, UNIX_EPOCH}};
+    use std::{
+        fs,
+        time::{SystemTime, UNIX_EPOCH},
+    };
 
     fn temp_repo() -> Repository {
         let root = std::env::temp_dir().join(format!(
             "lore-core-validate-{}",
-            SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos()
+            SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
         ));
         fs::create_dir_all(root.join(".lore")).unwrap();
         Repository {
@@ -146,7 +160,9 @@ mod tests {
         write_artifact(&repo, "feature.md", "id: FEATURE-001\n");
 
         let errors = validate_repository(&repo).unwrap();
-        assert!(errors.iter().any(|error| matches!(error, ValidationError::MissingField { field: "title", .. })));
+        assert!(errors
+            .iter()
+            .any(|error| matches!(error, ValidationError::MissingField { field: "title", .. })));
     }
 
     #[test]
@@ -156,7 +172,9 @@ mod tests {
         write_artifact(&repo, "two.md", "id: FEATURE-001\ntitle: Two\n");
 
         let errors = validate_repository(&repo).unwrap();
-        assert!(errors.iter().any(|error| matches!(error, ValidationError::DuplicateId { id, .. } if id == "FEATURE-001")));
+        assert!(errors.iter().any(
+            |error| matches!(error, ValidationError::DuplicateId { id, .. } if id == "FEATURE-001")
+        ));
     }
 
     #[test]
@@ -169,6 +187,8 @@ mod tests {
         );
 
         let errors = validate_repository(&repo).unwrap();
-        assert!(errors.iter().any(|error| matches!(error, ValidationError::UnknownReference { id, .. } if id == "REQ-999")));
+        assert!(errors.iter().any(
+            |error| matches!(error, ValidationError::UnknownReference { id, .. } if id == "REQ-999")
+        ));
     }
 }

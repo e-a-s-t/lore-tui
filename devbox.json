@@ -1,30 +1,37 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.2/.schema/devbox.schema.json",
   "packages": [
-    "rustup@latest",
-    "gcc@latest",
+    "rustc@latest",
+    "cargo@latest",
+    "rustfmt@latest",
+    "clippy@latest",
     "pkg-config@latest",
     "openssl@latest",
-    "git@latest"
+    "git@latest",
+    "jq@latest"
   ],
   "shell": {
-    "init_hook": [
-      "rustup default stable >/dev/null 2>&1 || true",
-      "rustup component add rustfmt clippy >/dev/null 2>&1 || true"
-    ],
     "scripts": {
-      "run-tui": "cargo run --manifest-path crates/lore-tui/Cargo.toml",
-      "build-tui": "cargo build --manifest-path crates/lore-tui/Cargo.toml",
-      "test-tui": "cargo test --manifest-path crates/lore-tui/Cargo.toml",
-      "fmt-tui": "cargo fmt --all --manifest-path crates/lore-tui/Cargo.toml",
-      "lint-tui": "cargo clippy --all-targets -- -D warnings --manifest-path crates/lore-tui/Cargo.toml",
-      "check-tui": "cargo check --manifest-path crates/lore-tui/Cargo.toml",
-      "run-cli": "cargo run --manifest-path crates/lore-cli/Cargo.toml",
-      "build-cli": "cargo build --manifest-path crates/lore-cli/Cargo.toml",
-      "test-cli": "cargo test --manifest-path crates/lore-cli/Cargo.toml",
-      "fmt-cli": "cargo fmt --all --manifest-path crates/lore-cli/Cargo.toml",
-      "lint-cli": "cargo clippy --all-targets -- -D warnings --manifest-path crates/lore-cli/Cargo.toml",
-      "check-cli": "cargo check --manifest-path crates/lore-cli/Cargo.toml"
+      "run-tui": "cargo run -p lore-tui",
+      "run-cli": "cargo run -p lore-cli",
+
+      "build": "cargo build --workspace",
+      "test": "cargo test --workspace",
+      "fmt": "cargo fmt --all",
+      "check": "cargo check --workspace",
+      "lint": "cargo clippy --workspace --all-targets -- -D warnings",
+
+      "build-tui": "cargo build -p lore-tui",
+      "test-tui": "cargo test -p lore-tui",
+      "check-tui": "cargo check -p lore-tui",
+
+      "build-cli": "cargo build -p lore-cli",
+      "test-cli": "cargo test -p lore-cli",
+      "check-cli": "cargo check -p lore-cli",
+
+      "release-patch": "./scripts/release-patch.sh",
+      "bump-minor": "./scripts/release-minor.sh",
+      "bump-major": "./scripts/release-major.sh"
     }
   }
 }

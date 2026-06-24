@@ -1,4 +1,7 @@
-use crate::{app::{App, Focus}, commands};
+use crate::{
+    app::{App, Focus},
+    commands,
+};
 use anyhow::Result;
 use crossterm::event::{self, Event, KeyCode, KeyEventKind, KeyModifiers};
 use notify::{Config, RecommendedWatcher, RecursiveMode, Watcher};
