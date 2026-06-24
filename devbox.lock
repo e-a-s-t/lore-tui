@@ -1,6 +1,54 @@
 {
   "lockfile_version": "1",
   "packages": {
+    "cargo-release@latest": {
+      "last_modified": "2026-06-02T02:01:59Z",
+      "resolved": "github:NixOS/nixpkgs/ffa10e26ae11d676b2db836259889f1f571cb14f#cargo-release",
+      "source": "devbox-search",
+      "version": "1.1.2",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/71yv37fmyaq8i3lp94fwq1n9q4jsmdna-cargo-release-1.1.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/71yv37fmyaq8i3lp94fwq1n9q4jsmdna-cargo-release-1.1.2"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/7dl81h7r8ja6qxgyh6x4fq8d9xpbkx2c-cargo-release-1.1.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/7dl81h7r8ja6qxgyh6x4fq8d9xpbkx2c-cargo-release-1.1.2"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/pcdqrpdc21kflp8j9zqz26mrh7x6fjnr-cargo-release-1.1.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/pcdqrpdc21kflp8j9zqz26mrh7x6fjnr-cargo-release-1.1.2"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/lhrcagkgw57jnq78niyddb444av8bglj-cargo-release-1.1.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/lhrcagkgw57jnq78niyddb444av8bglj-cargo-release-1.1.2"
+        }
+      }
+    },
     "cargo@latest": {
       "last_modified": "2026-05-21T08:15:18Z",
       "resolved": "github:NixOS/nixpkgs/4a29d733e8a7d5b824c3d8c958a946a9867b3eb2#cargo",

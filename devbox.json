@@ -3,6 +3,7 @@
   "packages": [
     "rustc@latest",
     "cargo@latest",
+    "cargo-release@latest",
     "rustfmt@latest",
     "clippy@latest",
     "pkg-config@latest",
@@ -12,8 +13,8 @@
   ],
   "shell": {
     "scripts": {
-      "run-tui": "cargo run -p lore-tui",
-      "run-cli": "cargo run -p lore-cli",
+      "tui": "cargo run -p lore-tui",
+      "cli": "cargo run -p lore-cli",
 
       "build": "cargo build --workspace",
       "test": "cargo test --workspace",
@@ -29,9 +30,9 @@
       "test-cli": "cargo test -p lore-cli",
       "check-cli": "cargo check -p lore-cli",
 
-      "release-patch": "./scripts/release-patch.sh",
-      "bump-minor": "./scripts/release-minor.sh",
-      "bump-major": "./scripts/release-major.sh"
+      "patch": "cargo release patch --no-publish",
+      "minor": "cargo release minor --no-publish",
+      "major": "cargo release major --no-publish"
     }
   }
 }
