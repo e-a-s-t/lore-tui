@@ -2,8 +2,9 @@
 id: REQ-013
 title: Artifact list commands match npm Lore behavior
 status: Draft
-related_requirements:
+related_features:
   - FEATURE-005
+related_requirements: []
 related_adrs: []
 related_stories: []
 related_tests: []

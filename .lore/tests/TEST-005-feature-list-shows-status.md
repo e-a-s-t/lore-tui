@@ -2,7 +2,10 @@
 id: TEST-005
 title: Feature list shows status
 status: Draft
-related_requirements: [FEATURE-002, REQ-006]
+related_features:
+  - FEATURE-002
+related_requirements:
+  - REQ-006
 related_adrs: []
 related_stories: []
 related_tests: []

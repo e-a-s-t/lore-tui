@@ -2,8 +2,9 @@
 id: REQ-014
 title: Discovery commands match npm Lore behavior
 status: Draft
-related_requirements:
+related_features:
   - FEATURE-006
+related_requirements: []
 related_adrs: []
 related_stories: []
 related_tests: []

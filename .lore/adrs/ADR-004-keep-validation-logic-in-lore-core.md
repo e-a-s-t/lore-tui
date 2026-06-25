@@ -2,13 +2,14 @@
 id: ADR-004
 title: Keep Validation Logic in lore-core
 status: Accepted
-related_requirements:
+related_features:
   - FEATURE-003
+related_requirements:
   - REQ-009
 related_adrs: []
 related_stories:
   - STORY-003
-related_tests: 
+related_tests:
   - TEST-008
 ---
 

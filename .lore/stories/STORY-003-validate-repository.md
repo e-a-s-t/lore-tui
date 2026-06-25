@@ -2,8 +2,9 @@
 id: STORY-003
 title: Validate Repository
 status: Accepted
-related_requirements:
+related_features:
   - FEATURE-003
+related_requirements:
   - REQ-009
 related_adrs:
   - ADR-004

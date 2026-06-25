@@ -2,8 +2,9 @@
 id: ADR-006
 title: Share artifact listing logic in lore-core
 status: Draft
-related_requirements:
+related_features:
   - FEATURE-005
+related_requirements: []
 related_adrs: []
 related_stories: []
 related_tests: []

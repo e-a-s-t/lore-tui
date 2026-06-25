@@ -2,10 +2,12 @@
 id: TEST-004
 title: Changes to .lore are reflected automatically
 status: Accepted
+related_features:
+  - FEATURE-001
 related_requirements:
   - REQ-005
-  - FEATURE-001
-related_adrs: [ADR-002]
+related_adrs:
+  - ADR-002
 related_stories: []
 related_tests: []
 ---

@@ -2,7 +2,10 @@
 id: TEST-006
 title: Related pane supports navigation
 status: Draft
-related_requirements: [FEATURE-002, REQ-007]
+related_features:
+  - FEATURE-002
+related_requirements:
+  - REQ-007
 related_adrs: []
 related_stories: []
 related_tests: []

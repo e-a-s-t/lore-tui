@@ -2,14 +2,16 @@
 id: REQ-009
 title: Validate Lore Repository
 status: Accepted
-related_requirements:
+related_features:
   - FEATURE-003
+related_requirements: []
 related_adrs: []
 related_stories:
   - STORY-003
 related_tests:
   - TEST-008
 ---
+
 ---
 
 # REQ-009 - Validate Lore Repository

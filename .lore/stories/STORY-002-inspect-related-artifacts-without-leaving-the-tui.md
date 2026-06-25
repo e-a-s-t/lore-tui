@@ -2,7 +2,9 @@
 id: STORY-002
 title: Inspect related artifacts without leaving the TUI
 status: Draft
-related_requirements: [FEATURE-002]
+related_features:
+  - FEATURE-002
+related_requirements: []
 related_adrs: []
 related_stories: []
 related_tests: []

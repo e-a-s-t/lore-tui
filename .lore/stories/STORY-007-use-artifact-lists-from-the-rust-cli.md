@@ -2,8 +2,9 @@
 id: STORY-007
 title: Use artifact lists from the Rust CLI
 status: Draft
-related_requirements:
+related_features:
   - FEATURE-005
+related_requirements: []
 related_adrs: []
 related_stories: []
 related_tests: []

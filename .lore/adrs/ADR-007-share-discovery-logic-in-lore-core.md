@@ -2,8 +2,9 @@
 id: ADR-007
 title: Share discovery logic in lore-core
 status: Draft
-related_requirements:
+related_features:
   - FEATURE-006
+related_requirements: []
 related_adrs: []
 related_stories: []
 related_tests: []

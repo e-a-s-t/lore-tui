@@ -2,10 +2,15 @@
 id: REQ-001
 title: Load Lore artifacts from .lore
 status: Accepted
-related_requirements: [FEATURE-001]
-related_adrs: [ADR-001]
-related_stories: [STORY-001]
-related_tests: [TEST-001]
+related_features:
+  - FEATURE-001
+related_requirements: []
+related_adrs:
+  - ADR-001
+related_stories:
+  - STORY-001
+related_tests:
+  - TEST-001
 ---
 
 # REQ-001: Load Lore artifacts from .lore

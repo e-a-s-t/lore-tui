@@ -2,9 +2,10 @@
 id: ADR-002
 title: Automatically reload artifacts on file changes
 status: Accepted
+related_features:
+  - FEATURE-001
 related_requirements:
   - REQ-005
-  - FEATURE-001
 related_adrs: []
 related_stories: []
 related_tests:

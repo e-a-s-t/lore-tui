@@ -2,8 +2,9 @@
 id: TEST-008
 title: Validation Repository Integrity
 status: Accepted
-related_requirements:
+related_features:
   - FEATURE-003
+related_requirements:
   - REQ-009
 related_adrs:
   - ADR-004

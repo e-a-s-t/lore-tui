@@ -2,10 +2,14 @@
 id: REQ-008
 title: Preview artifacts using lore show
 status: Draft
-related_requirements: [FEATURE-002]
-related_adrs: [ADR-003]
+related_features:
+  - FEATURE-002
+related_requirements: []
+related_adrs:
+  - ADR-003
 related_stories: []
-related_tests: [TEST-007]
+related_tests:
+  - TEST-007
 ---
 
 # REQ-008 - Preview artifacts using lore show

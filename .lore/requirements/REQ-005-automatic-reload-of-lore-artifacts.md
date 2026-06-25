@@ -2,9 +2,10 @@
 id: REQ-005
 title: Automatic reload of Lore artifacts
 status: Accepted
-related_requirements: 
+related_features:
   - FEATURE-001
-related_adrs: 
+related_requirements: []
+related_adrs:
   - ADR-002
 related_stories: []
 related_tests: []

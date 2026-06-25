@@ -2,8 +2,9 @@
 id: TEST-012
 title: Artifact list commands match npm Lore output
 status: Draft
-related_requirements:
+related_features:
   - FEATURE-005
+related_requirements: []
 related_adrs: []
 related_stories: []
 related_tests: []

@@ -2,10 +2,13 @@
 id: REQ-007
 title: Navigate related artifacts
 status: Draft
-related_requirements: [FEATURE-002]
+related_features:
+  - FEATURE-002
+related_requirements: []
 related_adrs: []
 related_stories: []
-related_tests: [TEST-006]
+related_tests:
+  - TEST-006
 ---
 
 # REQ-007 - Navigate related artifacts

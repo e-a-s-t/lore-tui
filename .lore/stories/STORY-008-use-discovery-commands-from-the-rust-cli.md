@@ -2,8 +2,9 @@
 id: STORY-008
 title: Use discovery commands from the Rust CLI
 status: Draft
-related_requirements:
+related_features:
   - FEATURE-006
+related_requirements: []
 related_adrs: []
 related_stories: []
 related_tests: []

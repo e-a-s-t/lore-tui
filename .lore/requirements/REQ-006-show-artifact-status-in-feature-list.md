@@ -2,10 +2,13 @@
 id: REQ-006
 title: Show artifact status in feature list
 status: Accepted
-related_requirements: [FEATURE-002]
+related_features:
+  - FEATURE-002
+related_requirements: []
 related_adrs: []
 related_stories: []
-related_tests: [TEST-005]
+related_tests:
+  - TEST-005
 ---
 
 # REQ-006 - Show artifact status in feature list

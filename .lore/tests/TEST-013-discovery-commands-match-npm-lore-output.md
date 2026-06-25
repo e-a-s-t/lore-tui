@@ -2,8 +2,9 @@
 id: TEST-013
 title: Discovery commands match npm Lore output
 status: Draft
-related_requirements:
+related_features:
   - FEATURE-006
+related_requirements: []
 related_adrs: []
 related_stories: []
 related_tests: []

@@ -2,7 +2,10 @@
 id: ADR-003
 title: Use Lore CLI for preview rendering
 status: Draft
-related_requirements: [FEATURE-002, REQ-008]
+related_features:
+  - FEATURE-002
+related_requirements:
+  - REQ-008
 related_adrs: []
 related_stories: []
 related_tests: []
