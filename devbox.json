@@ -9,7 +9,8 @@
     "pkg-config@latest",
     "openssl@latest",
     "git@latest",
-    "jq@latest"
+    "jq@latest",
+    "ruby@latest"
   ],
   "shell": {
     "scripts": {
@@ -32,7 +33,10 @@
 
       "patch": "cargo release patch --no-publish --execute",
       "minor": "cargo release minor --no-publish --execute",
-      "major": "cargo release major --no-publish --execute"
+      "major": "cargo release major --no-publish --execute",
+
+      "docs": "cd docs && gem install bundler -v '~> 2.5' && bundle _2.7.2_ install && bundle _2.7.2_ exec jekyll serve --host 0.0.0.0 --livereload --incremental",
+      "docs-build": "cd docs && bundle _2.7.2_ exec jekyll build"
     }
   }
 }

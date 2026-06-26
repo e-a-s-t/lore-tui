@@ -1,0 +1,12 @@
+title: Lore
+description: Git-native software planning for humans and AI
+theme: jekyll-theme-slate
+
+markdown: kramdown
+
+header_pages:
+  - getting-started.md
+  - concepts.md
+  - tdd.md
+  - api-first.md
+  - cli.md
